@@ -1,0 +1,51 @@
+.container {
+  width: 1184px;
+  margin: 0 auto;
+  padding: 0 60px;
+}
+
+.header {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  padding: 8px 0;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoContainer a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  column-gap: 8px;
+}
+
+.logoContainer svg {
+  font-size: 28px;
+}
+
+.navContainer {
+  display: flex;
+  column-gap: 12px;
+}
+
+.nav a {
+  font-size: 16px;
+  color: var(--dark-text-color);
+  padding: 12px;
+}
+
+.nav a:hover {
+  border-radius: 12px;
+  color: var(--light-text-color);
+  background-color: var(--accent-color);
+}
+
+.nav .active {
+  background-color: var(--accent-hover-color);
+  border-radius: 12px;
+  color: var(--light-text-color);
+}
