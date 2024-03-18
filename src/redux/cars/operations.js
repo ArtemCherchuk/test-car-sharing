@@ -16,3 +16,15 @@ export const fetchCars = createAsyncThunk(
     }
   }
 );
+
+export const fetchCarsId = createAsyncThunk(
+  'advert/id',
+  async (id, thunkApi) => {
+    try {
+      const { data } = await instance.get(`/advert/?id=${id}`);
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);

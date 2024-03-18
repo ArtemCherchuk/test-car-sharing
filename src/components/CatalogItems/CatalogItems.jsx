@@ -1,16 +1,24 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { carsList } from '../../redux/cars/cars.selectors';
-import { fetchCars } from '../../redux/cars/operations';
+import { fetchCars, fetchCarsId } from '../../redux/cars/operations';
 import css from './CatalogItems.module.css';
+import { Modal } from 'components/Modal/Modal';
 
 export const CatalogItems = () => {
   const cars = useSelector(carsList);
+
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchCars());
   }, [dispatch]);
+
+  const onOpenModal = id => {
+    dispatch(fetchCarsId(id));
+    setIsOpenModal(true);
+  };
 
   return (
     <div className={css.section}>
@@ -35,28 +43,55 @@ export const CatalogItems = () => {
               <li key={id} className={css.listItem}>
                 <div>
                   <img src={img} alt={description} className={css.img} />
-                  <div>
-                    <p>{make}</p>
-                    <span>{model}, </span>
-                    <span>{year}</span>
+                  <div className={css.containerModel}>
+                    <p>
+                      {make} <span className={css.model}>{model}, </span>
+                      <span>{year}</span>
+                    </p>
+
                     <p>{rentalPrice}</p>
                   </div>
-                  <div>
-                    <p>{dataAdress[1]}</p>
-                    <p>{dataAdress[2]}</p>
-                    <p>{rentalCompany}</p>
-                    <p>{type}</p>
-                    <p>{make}</p>
-                    <p>{id}</p>
+                  <div className={css.containerDescription}>
+                    <p>
+                      {dataAdress[1]}
+                      <span className={css.yotaItem}>&Iota;</span>
+                    </p>
+                    <p>
+                      {dataAdress[2]}
+                      <span className={css.yotaItem}>&Iota;</span>
+                    </p>
+                    <p>
+                      {rentalCompany}
+                      <span className={css.yotaItem}>&Iota;</span>
+                    </p>
+                    <p>
+                      {type}
+                      <span className={css.yotaItem}>&Iota;</span>
+                    </p>
+                    <p>
+                      {make}
+                      <span className={css.yotaItem}>&Iota;</span>
+                    </p>
+                    <p>
+                      {id}
+                      <span className={css.yotaItem}>&Iota;</span>
+                    </p>
                     <p>{accessories[0]}</p>
                   </div>
-                  <button type="button">Learn More</button>
+                  <button
+                    type="button"
+                    className={css.button}
+                    onClick={() => onOpenModal(id)}
+                  >
+                    Learn More
+                  </button>
                 </div>
               </li>
             );
           }
         )}
       </ul>
+      {isOpenModal && <Modal />}
     </div>
   );
 };
