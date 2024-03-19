@@ -1,4 +1,1 @@
-export const carsList = state => state.carsStore.items;
-export const pageCars = state => state.carsStore.page;
-export const limitCars = state => state.carsStore.limit;
-export const itemId = state => state.carsStore.itemId;
+export const selectCarsList = state => state.carsStore.items;

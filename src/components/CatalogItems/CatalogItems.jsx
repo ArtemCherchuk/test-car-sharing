@@ -1,24 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { carsList } from '../../redux/cars/cars.selectors';
-import { fetchCars, fetchCarsId } from '../../redux/cars/operations';
+import { selectCarsList } from '../../redux/cars/cars.selectors';
+import { fetchCars } from '../../redux/cars/operations';
 import css from './CatalogItems.module.css';
 import { Modal } from 'components/Modal/Modal';
+import { selectIsOpenModal } from '../../redux/modal/modal.selectors';
+import { openModal } from '../../redux/modal/modal.reduser';
 
 export const CatalogItems = () => {
-  const cars = useSelector(carsList);
-
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const cars = useSelector(selectCarsList);
+  const isOpenModal = useSelector(selectIsOpenModal);
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchCars());
   }, [dispatch]);
-
-  const onOpenModal = id => {
-    dispatch(fetchCarsId(id));
-    setIsOpenModal(true);
-  };
 
   return (
     <div className={css.section}>
@@ -32,10 +29,15 @@ export const CatalogItems = () => {
             type,
             img,
             description,
+            fuelConsumption,
+            engineSize,
             accessories,
+            functionalities,
             rentalPrice,
             rentalCompany,
             address,
+            rentalConditions,
+            mileage,
           }) => {
             const dataAdress = address.split(',');
 
@@ -81,7 +83,28 @@ export const CatalogItems = () => {
                   <button
                     type="button"
                     className={css.button}
-                    onClick={() => onOpenModal(id)}
+                    onClick={() =>
+                      dispatch(
+                        openModal({
+                          id,
+                          year,
+                          make,
+                          model,
+                          type,
+                          img,
+                          description,
+                          fuelConsumption,
+                          engineSize,
+                          accessories,
+                          functionalities,
+                          rentalPrice,
+                          rentalCompany,
+                          address,
+                          rentalConditions,
+                          mileage,
+                        })
+                      )
+                    }
                   >
                     Learn More
                   </button>
