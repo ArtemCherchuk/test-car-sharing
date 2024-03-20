@@ -7,9 +7,11 @@ export const instance = axios.create({
 
 export const fetchCars = createAsyncThunk(
   'advert/getAll',
-  async (_, thunkApi) => {
+  async (page, thunkApi) => {
     try {
-      const { data } = await instance.get(`/advert`);
+      const { data } = await instance.get(`/advert`, {
+        params: { page: page, limit: 12 },
+      });
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);

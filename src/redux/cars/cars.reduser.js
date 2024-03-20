@@ -7,7 +7,6 @@ const initialState = {
   isLoading: false,
   error: null,
   page: 1,
-  limit: 12,
 };
 
 const carsSlise = createSlice({
@@ -17,7 +16,7 @@ const carsSlise = createSlice({
   extraReducers: builder =>
     builder.addCase(fetchCars.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.items = payload;
+      state.items = [...payload];
     }),
 });
 

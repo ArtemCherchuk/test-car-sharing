@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCarsList } from '../../redux/cars/cars.selectors';
+import { selectCarsList, selectPage } from '../../redux/cars/cars.selectors';
 import { fetchCars } from '../../redux/cars/operations';
 import css from './CatalogItems.module.css';
 import { Modal } from 'components/Modal/Modal';
@@ -9,13 +9,14 @@ import { openModal } from '../../redux/modal/modal.reduser';
 
 export const CatalogItems = () => {
   const cars = useSelector(selectCarsList);
+  const page = useSelector(selectPage);
   const isOpenModal = useSelector(selectIsOpenModal);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCars());
-  }, [dispatch]);
+    dispatch(fetchCars(page));
+  }, [dispatch, page]);
 
   return (
     <div className={css.section}>

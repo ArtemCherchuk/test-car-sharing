@@ -67,3 +67,8 @@
   color: var(--light-text-color);
   background-color: var(--accent-hover-color);
 }
+
+.button:hover,
+.button:focus {
+  background-color: var(--accent-color);
+}
