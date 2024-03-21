@@ -1,22 +1,29 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectCarsList, selectPage } from '../../redux/cars/cars.selectors';
-import { fetchCars } from '../../redux/cars/operations';
 import css from './CatalogItems.module.css';
-import { Modal } from 'components/Modal/Modal';
+
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectCarsList, selectTotal } from '../../redux/cars/cars.selectors';
+import { fetchCars } from '../../redux/cars/operations';
 import { selectIsOpenModal } from '../../redux/modal/modal.selectors';
 import { openModal } from '../../redux/modal/modal.reduser';
 
+import { ButtonLoad } from 'components/ButtonLoad/ButtonLoad';
+import { Modal } from 'components/Modal/Modal';
+
 export const CatalogItems = () => {
   const cars = useSelector(selectCarsList);
-  const page = useSelector(selectPage);
+  const total = useSelector(selectTotal);
   const isOpenModal = useSelector(selectIsOpenModal);
+
+  const [page, setPage] = useState(1);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCars(page));
-  }, [dispatch, page]);
+    dispatch(fetchCars());
+  }, [dispatch]);
+
+  const onClickLoadMore = () => {};
 
   return (
     <div className={css.section}>
@@ -115,6 +122,7 @@ export const CatalogItems = () => {
           }
         )}
       </ul>
+      <ButtonLoad onClickLoadMore={onClickLoadMore} />
       {isOpenModal && <Modal />}
     </div>
   );

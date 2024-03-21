@@ -6,18 +6,20 @@ const initialState = {
   items: [],
   isLoading: false,
   error: null,
-  page: 1,
+  total: 0,
 };
 
 const carsSlise = createSlice({
   name: 'cars',
   initialState,
-
-  extraReducers: builder =>
+  extraReducers: builder => {
     builder.addCase(fetchCars.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.items = [...payload];
-    }),
+      state.error = null;
+      state.items = payload;
+      state.total = state.items.length;
+    });
+  },
 });
 
 export const carsReduser = carsSlise.reducer;
