@@ -1,0 +1,17 @@
+.button {
+  display: block;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  margin: 0 auto;
+
+  font-size: 14px;
+  background-color: var(--accent-hover-color);
+  color: var(--light-text-color);
+  cursor: pointer;
+}
+
+.button:hover,
+.button:focus {
+  background-color: var(--accent-color);
+}
