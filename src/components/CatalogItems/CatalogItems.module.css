@@ -10,7 +10,39 @@
 }
 
 .listItem {
+  position: relative;
   width: 274px;
+}
+
+.containerFavorine {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+}
+
+.buttonFavorite {
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+
+  padding: 0;
+}
+
+.iconFavorite {
+  width: 18px;
+  height: 18px;
+  fill: var(--light-text-color);
+}
+
+.iconFullFavorite {
+  width: 18px;
+  height: 18px;
+  fill: var(--accent-hover-color);
+}
+
+.iconFavorite:hover,
+.iconFavorite:focus {
+  fill: var(--accent-hover-color);
 }
 
 .img {

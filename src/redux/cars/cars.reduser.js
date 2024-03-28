@@ -21,13 +21,22 @@ const carsSlise = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase(fetchCars.fulfilled, (state, { payload }) => {
-      state.isLoading = false;
-      state.error = null;
-      state.items = [...state.items, ...payload];
-    });
+    builder
+      .addCase(fetchCars.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = null;
+        state.items = [...state.items, ...payload];
+      })
+      .addCase(fetchCars.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchCars.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
+      });
   },
 });
 
-export const { resetItems } = carsSlise.actions;
+export const { resetItems, addFavorite } = carsSlise.actions;
 export const carsReduser = carsSlise.reducer;
