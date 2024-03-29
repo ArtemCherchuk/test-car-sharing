@@ -19,6 +19,11 @@ const carsSlise = createSlice({
     addFavorite: (state, { payload }) => {
       state.favoriteItems.push(payload);
     },
+    removeFavorite: (state, { payload }) => {
+      const index = state.favoriteItems.findIndex(item => item.id === payload);
+
+      state.favoriteItems.splice(index, 1);
+    },
   },
   extraReducers: builder => {
     builder
@@ -38,5 +43,5 @@ const carsSlise = createSlice({
   },
 });
 
-export const { resetItems, addFavorite } = carsSlise.actions;
+export const { resetItems, addFavorite, removeFavorite } = carsSlise.actions;
 export const carsReduser = carsSlise.reducer;

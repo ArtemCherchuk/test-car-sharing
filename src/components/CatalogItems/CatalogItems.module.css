@@ -45,6 +45,11 @@
   fill: var(--accent-hover-color);
 }
 
+.iconFullFavorite:hover,
+.iconFullFavorite:focus {
+  fill: var(--accent-color);
+}
+
 .img {
   width: 100%;
   height: 268px;

@@ -13,8 +13,7 @@ import { openModal } from '../../redux/modal/modal.reduser';
 import { ButtonLoad } from 'components/ButtonLoad/ButtonLoad';
 import { Modal } from 'components/Modal/Modal';
 import { MdFavoriteBorder, MdOutlineFavorite } from 'react-icons/md';
-import { addFavorite } from '../../redux/cars/cars.reduser';
-import { FaBullseye } from 'react-icons/fa';
+import { addFavorite, removeFavorite } from '../../redux/cars/cars.reduser';
 
 export const CatalogItems = () => {
   const dispatch = useDispatch();
@@ -22,10 +21,9 @@ export const CatalogItems = () => {
   const cars = useSelector(selectCarsList);
   const isOpenModal = useSelector(selectIsOpenModal);
   const favoriteItems = useSelector(selectFavoriteItems);
-  console.log(favoriteItems);
+  // console.log(favoriteItems);
 
   const [page, setPage] = useState(1);
-  const [favorite, setFavorite] = useState(false);
 
   useEffect(() => {
     dispatch(fetchCars(page));
@@ -35,13 +33,15 @@ export const CatalogItems = () => {
     setPage(page + 1);
   };
 
-  const onClickFavorine = data => {
-    setFavorite(true);
-    dispatch(addFavorite(data));
-  };
+  const onClickFavorite = data => {
+    const item = favoriteItems.find(item => item.id === data.id);
 
-  const onClickNotFavorite = () => {
-    setFavorite(false);
+    if (item) {
+      dispatch(removeFavorite(item.id));
+      return;
+    }
+    dispatch(addFavorite(data));
+    return;
   };
 
   return (
@@ -68,49 +68,42 @@ export const CatalogItems = () => {
               mileage,
             }) => {
               const dataAdress = address.split(',');
+              const index = favoriteItems.findIndex(item => item.id === id);
 
               return (
                 <li key={id} className={css.listItem}>
-                  {!favorite ? (
-                    <span className={css.containerFavorine}>
-                      <button
-                        type="button"
-                        className={css.buttonFavorite}
-                        onClick={() =>
-                          onClickFavorine({
-                            id,
-                            year,
-                            make,
-                            model,
-                            type,
-                            img,
-                            description,
-                            fuelConsumption,
-                            engineSize,
-                            accessories,
-                            functionalities,
-                            rentalPrice,
-                            rentalCompany,
-                            address,
-                            rentalConditions,
-                            mileage,
-                          })
-                        }
-                      >
+                  <span className={css.containerFavorine}>
+                    <button
+                      type="button"
+                      className={css.buttonFavorite}
+                      onClick={() =>
+                        onClickFavorite({
+                          id,
+                          year,
+                          make,
+                          model,
+                          type,
+                          img,
+                          description,
+                          fuelConsumption,
+                          engineSize,
+                          accessories,
+                          functionalities,
+                          rentalPrice,
+                          rentalCompany,
+                          address,
+                          rentalConditions,
+                          mileage,
+                        })
+                      }
+                    >
+                      {index === -1 ? (
                         <MdFavoriteBorder className={css.iconFavorite} />
-                      </button>
-                    </span>
-                  ) : (
-                    <span className={css.containerFavorine}>
-                      <button
-                        type="button"
-                        className={css.buttonFavorite}
-                        onClick={onClickNotFavorite}
-                      >
+                      ) : (
                         <MdOutlineFavorite className={css.iconFullFavorite} />
-                      </button>
-                    </span>
-                  )}
+                      )}
+                    </button>
+                  </span>
 
                   <div>
                     <img src={img} alt={description} className={css.img} />
