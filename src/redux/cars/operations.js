@@ -19,3 +19,15 @@ export const fetchCars = createAsyncThunk(
     }
   }
 );
+
+export const fetchCarsAll = createAsyncThunk(
+  'advert/getAll',
+  async (_, thunkApi) => {
+    try {
+      const { data } = await instance.get(`/advert`);
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);

@@ -1,12 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const { fetchCars } = require('./operations');
+const { fetchCars, fetchCarsAll } = require('./operations');
 
 const initialState = {
   items: [],
+  allItems: [],
   favoriteItems: [],
   isLoading: false,
   error: null,
+  filter: '',
 };
 
 const carsSlise = createSlice({
@@ -21,8 +23,10 @@ const carsSlise = createSlice({
     },
     removeFavorite: (state, { payload }) => {
       const index = state.favoriteItems.findIndex(item => item.id === payload);
-
       state.favoriteItems.splice(index, 1);
+    },
+    filterValue: (state, { payload }) => {
+      state.filter = payload;
     },
   },
   extraReducers: builder => {
@@ -39,9 +43,23 @@ const carsSlise = createSlice({
       .addCase(fetchCars.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.error = payload;
+      })
+      .addCase(fetchCarsAll.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = null;
+        state.allItemsitems = payload;
+      })
+      .addCase(fetchCarsAll.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchCarsAll.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
       });
   },
 });
 
-export const { resetItems, addFavorite, removeFavorite } = carsSlise.actions;
+export const { resetItems, addFavorite, removeFavorite, filterValue } =
+  carsSlise.actions;
 export const carsReduser = carsSlise.reducer;

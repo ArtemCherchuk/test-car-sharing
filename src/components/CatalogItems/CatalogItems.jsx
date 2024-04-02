@@ -1,37 +1,20 @@
 import css from './CatalogItems.module.css';
 
-import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectCarsList,
-  selectFavoriteItems,
-} from '../../redux/cars/cars.selectors';
-import { fetchCars } from '../../redux/cars/operations';
+import { selectFavoriteItems } from '../../redux/cars/cars.selectors';
+
 import { selectIsOpenModal } from '../../redux/modal/modal.selectors';
 import { openModal } from '../../redux/modal/modal.reduser';
 
-import { ButtonLoad } from 'components/ButtonLoad/ButtonLoad';
 import { Modal } from 'components/Modal/Modal';
 import { MdFavoriteBorder, MdOutlineFavorite } from 'react-icons/md';
 import { addFavorite, removeFavorite } from '../../redux/cars/cars.reduser';
 
-export const CatalogItems = () => {
+export const CatalogItems = ({ data }) => {
   const dispatch = useDispatch();
 
-  const cars = useSelector(selectCarsList);
   const isOpenModal = useSelector(selectIsOpenModal);
   const favoriteItems = useSelector(selectFavoriteItems);
-  // console.log(favoriteItems);
-
-  const [page, setPage] = useState(1);
-
-  useEffect(() => {
-    dispatch(fetchCars(page));
-  }, [dispatch, page]);
-
-  const onClickLoadMore = () => {
-    setPage(page + 1);
-  };
 
   const onClickFavorite = data => {
     const item = favoriteItems.find(item => item.id === data.id);
@@ -47,8 +30,8 @@ export const CatalogItems = () => {
   return (
     <div className={css.section}>
       <ul className={css.list}>
-        {cars &&
-          cars.map(
+        {data &&
+          data.map(
             ({
               id,
               year,
@@ -176,10 +159,6 @@ export const CatalogItems = () => {
             }
           )}
       </ul>
-      {(cars.length / 12) % 1 === 0 && (
-        <ButtonLoad onClickLoadMore={onClickLoadMore} />
-      )}
-
       {isOpenModal && <Modal />}
     </div>
   );
