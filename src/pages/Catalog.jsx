@@ -13,14 +13,19 @@ import {
 } from '../redux/cars/cars.selectors';
 
 const Cars = () => {
-  // const cars = useSelector(selectVisibleItems);
-  const cars = useSelector(selectCarsList);
-
   const dispatch = useDispatch();
+
+  const carsFiltered = useSelector(selectVisibleItems);
+  const carsPage = useSelector(selectCarsList);
+
+  const [isFiltered, setIsFiltered] = useState(false);
   const [page, setPage] = useState(1);
+
+  const cars = isFiltered ? carsFiltered : carsPage;
 
   useEffect(() => {
     dispatch(resetItems());
+    setIsFiltered(false);
   }, [dispatch]);
 
   useEffect(() => {
@@ -37,7 +42,7 @@ const Cars = () => {
 
   return (
     <div>
-      <FormSearch />
+      <FormSearch setIsFiltered={setIsFiltered} />
       <CatalogItems data={cars} />
       {(cars.length / 12) % 1 === 0 && (
         <ButtonLoad onClickLoadMore={onClickLoadMore} />

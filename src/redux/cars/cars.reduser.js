@@ -47,7 +47,7 @@ const carsSlise = createSlice({
       .addCase(fetchCarsAll.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.error = null;
-        state.allItemsitems = payload;
+        state.allItems = payload;
       })
       .addCase(fetchCarsAll.pending, state => {
         state.isLoading = true;

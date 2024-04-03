@@ -3,18 +3,20 @@ import { makes } from 'helpers/makes';
 import { useDispatch } from 'react-redux';
 import { filterValue } from '../../redux/cars/cars.reduser';
 
-export const FormSearch = () => {
+export const FormSearch = ({ setIsFiltered }) => {
   const dispatch = useDispatch();
 
   const onHandleSubmit = e => {
     e.preventDefault();
     const value = e.currentTarget[0].value;
     dispatch(filterValue(value));
+    setIsFiltered(true);
   };
 
   const onResetSearch = e => {
     e.currentTarget.parentElement[0].value = 'Enter the text';
     dispatch(filterValue(''));
+    setIsFiltered(false);
   };
 
   return (
