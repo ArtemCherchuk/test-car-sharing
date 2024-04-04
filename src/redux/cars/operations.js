@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const instance = axios.create({
-  baseURL: 'http://65f1c1ac034bdbecc7639a65.mockapi.io/',
+  baseURL: 'https://65f1c1ac034bdbecc7639a65.mockapi.io/',
 });
 
 export const fetchCars = createAsyncThunk(
