@@ -1,4 +1,5 @@
 import css from './CatalogItems.module.css';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFavoriteItems } from '../../redux/cars/cars.selectors';
@@ -21,9 +22,11 @@ export const CatalogItems = ({ data }) => {
 
     if (item) {
       dispatch(removeFavorite(item.id));
+      Notify.success('Removed from favorites');
       return;
     }
     dispatch(addFavorite(data));
+    Notify.success('Added to favorites');
     return;
   };
 

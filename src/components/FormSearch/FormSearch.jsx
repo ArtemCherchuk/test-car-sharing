@@ -1,4 +1,5 @@
 import css from './FormSearch.module.css';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { makes } from 'helpers/makes';
 import { useDispatch } from 'react-redux';
 import { filterValue } from '../../redux/cars/cars.reduser';
@@ -10,7 +11,7 @@ export const FormSearch = ({ setIsFiltered }) => {
     e.preventDefault();
     const value = e.currentTarget[0].value;
     if (value === 'Enter the text') {
-      alert('Please select car brand');
+      Notify.warning('Please select a car brand');
       return;
     }
     dispatch(filterValue(value));

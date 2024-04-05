@@ -12,7 +12,7 @@ import {
   selectVisibleItems,
 } from '../redux/cars/cars.selectors';
 
-const Cars = () => {
+const Catalog = () => {
   const dispatch = useDispatch();
 
   const carsFiltered = useSelector(selectVisibleItems);
@@ -51,4 +51,4 @@ const Cars = () => {
   );
 };
 
-export default Cars;
+export default Catalog;
